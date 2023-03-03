@@ -13,11 +13,14 @@ function App() {
     },
     onSubmit: values => {
       console.log('form: ', values);
+      alert('Login Sucessful')
     },
     validate: values =>{
       let errors = {};
-      if(!values.email) errors.email = 'Required'
-      if(!values.password) errors.password = 'Required'
+      let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if(!values.email) errors.email = 'Field required'
+      if(!values.password) errors.password = 'Field required'
+      if(!values.email.match(validRegex) && values.email) errors.email = 'Username should be an email'
       return errors;
     }
   });
@@ -32,18 +35,18 @@ function App() {
               <h4 className='card-title'>My Form</h4>
 
               <div className="input-group mb-3 mt-4">
-                <input name="email" type="text" className="form-control" placeholder="Recipient's email" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={formik.handleChange} value={formik.values.email}/>
+                <input id="emailField" name="email" type="text" className="form-control" placeholder="Recipient's email" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={formik.handleChange} value={formik.values.email}/>
                 <span className="input-group-text" id="basic-addon2">@example.com</span>
               </div>
-              {formik.errors.email ? <p className="text-start" style={{color: 'red'}}>{formik.errors.email}</p>: null}
+              {formik.errors.email ? <div id="emailError" className="text-start" style={{color: 'red'}}>{formik.errors.email}</div>: null}
               
               <div className="input-group mb-3 mt-4">
-                <input name="password" type="text" className="form-control" placeholder="Enter Password" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={formik.handleChange} value={formik.values.password}/>
+                <input id="pswField" name="password" type="text" className="form-control" placeholder="Enter Password" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={formik.handleChange} value={formik.values.password}/>
                 
               </div>
-              {formik.errors.password ? <p className="text-start" style={{color: 'red'}}>{formik.errors.password}</p>: null}
+              {formik.errors.password ? <div id="pswError" className="text-start" style={{color: 'red'}}>{formik.errors.password}</div>: null}
 
-              <button className="btn btn-primary mt-5" type="submit">Submit</button>
+              <button id="submitBtn" className="btn btn-primary mt-5" type="submit">Submit</button>
 
           </div>
         </div>
